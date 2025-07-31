@@ -60,12 +60,15 @@ import {
 } from "./tools/kubectl-rollout.js";
 import { registerPromptHandlers } from "./prompts/index.js";
 import { ping, pingSchema } from "./tools/ping.js";
+import { envConfig } from "./config/env-config.js";
 
-// Check environment variables for tool filtering
-const allowOnlyReadonlyTools = process.env.ALLOW_ONLY_READONLY_TOOLS === "true";
-const allowedToolsEnv = process.env.ALLOWED_TOOLS;
-const nonDestructiveTools =
-  process.env.ALLOW_ONLY_NON_DESTRUCTIVE_TOOLS === "true";
+// Environment variables from shared config
+const { 
+  allowOnlyReadonlyTools, 
+  allowedToolsEnv, 
+  nonDestructiveTools, 
+  kubectlContextEnabled 
+} = envConfig;
 
 // Define readonly tools
 const readonlyTools = [

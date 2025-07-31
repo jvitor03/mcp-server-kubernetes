@@ -2,19 +2,27 @@ import { KubernetesManager } from "../types.js";
 import { execFileSync } from "child_process";
 import { McpError, ErrorCode } from "@modelcontextprotocol/sdk/types.js";
 import { getSpawnMaxBuffer } from "../config/max-buffer.js";
+import { envConfig } from "../config/env-config.js";
+
+// Define operation enum and descriptions based on environment variable
+const operationEnum = envConfig.kubectlContextEnabled ? ["list", "get", "set"] : ["list", "get"];
+const operationDescription = envConfig.kubectlContextEnabled 
+  ? "Operation to perform: list contexts, get current context, or set current context"
+  : "Operation to perform: list contexts or get current context";
+const schemaDescription = envConfig.kubectlContextEnabled
+  ? "Manage Kubernetes contexts - list, get, or set the current context"
+  : "Manage Kubernetes contexts - list or get the current context";
 
 export const kubectlContextSchema = {
   name: "kubectl_context",
-  description:
-    "Manage Kubernetes contexts - list, get, or set the current context",
+  description: schemaDescription,
   inputSchema: {
     type: "object",
     properties: {
       operation: {
         type: "string",
-        enum: ["list", "get", "set"],
-        description:
-          "Operation to perform: list contexts, get current context, or set current context",
+        enum: operationEnum,
+        description: operationDescription,
         default: "list",
       },
       name: {
@@ -44,10 +52,13 @@ export const kubectlContextSchema = {
   },
 } as const;
 
+// Define operation type to include all possible values (TypeScript can't conditionally type at compile time based on runtime values)
+type OperationType = "list" | "get" | "set";
+
 export async function kubectlContext(
   k8sManager: KubernetesManager,
   input: {
-    operation: "list" | "get" | "set";
+    operation: OperationType;
     name?: string;
     showCurrent?: boolean;
     detailed?: boolean;
@@ -58,6 +69,14 @@ export async function kubectlContext(
     const { operation, name, output = "json" } = input;
     const showCurrent = input.showCurrent !== false; // Default to true if not specified
     const detailed = input.detailed === true; // Default to false if not specified
+
+    // Runtime validation: prevent "set" operation when kubectlContextEnabled is false
+    if (operation === "set" && !envConfig.kubectlContextEnabled) {
+      throw new McpError(
+        ErrorCode.InvalidParams,
+        "Setting context is disabled. KUBECTL_CONTEXT_ENABLED environment variable must be set to 'true' to enable this operation."
+      );
+    }
 
     const command = "kubectl";
     let result = "";
