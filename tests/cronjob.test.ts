@@ -34,6 +34,7 @@ describe("kubernetes cronjob operations with kubectl commands", () => {
   let client: Client;
   let testNamespace: string;
   const NAMESPACE_PREFIX = "test-cronjob-ns";
+  const CONTEXT = "minikube";
 
   /**
    * Set up before each test:
@@ -76,6 +77,7 @@ describe("kubernetes cronjob operations with kubectl commands", () => {
             arguments: {
               resourceType: "namespace",
               name: testNamespace,
+              context: CONTEXT
             },
           },
         },
@@ -108,6 +110,7 @@ describe("kubernetes cronjob operations with kubectl commands", () => {
             arguments: {
               resourceType: "namespace",
               name: testNamespace,
+              context: CONTEXT
             },
           },
         },
@@ -136,7 +139,8 @@ describe("kubernetes cronjob operations with kubectl commands", () => {
           arguments: {
             resourceType: "cronjobs",
             namespace: testNamespace,
-            output: "json"
+            output: "json",
+            context: CONTEXT
           },
         },
       },
@@ -203,7 +207,8 @@ spec:
             name: "kubectl_create",
             arguments: {
               manifest: cronJobManifest,
-              namespace: testNamespace
+              namespace: testNamespace,
+              context: CONTEXT
             },
           },
         },
@@ -228,7 +233,8 @@ spec:
             arguments: {
               resourceType: "cronjobs",
               namespace: testNamespace,
-              output: "json"
+              output: "json",
+              context: CONTEXT
             },
           },
         },
@@ -285,6 +291,7 @@ spec:
               resourceType: "cronjob",
               name: cronJobName,
               namespace: testNamespace,
+              context: CONTEXT
             },
           },
         },
@@ -313,7 +320,8 @@ spec:
               resourceType: "jobs",
               namespace: testNamespace,
               labelSelector: `app=${cronJobName}`,
-              output: "json"
+              output: "json",
+              context: CONTEXT
             },
           },
         },
@@ -338,6 +346,7 @@ spec:
               resourceType: "cronjob",
               name: cronJobName,
               namespace: testNamespace,
+              context: CONTEXT
             },
           },
         },

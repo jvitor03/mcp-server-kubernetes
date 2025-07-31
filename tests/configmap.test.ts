@@ -32,6 +32,7 @@ describe("test kubernetes configmap with kubectl commands", () => {
   let transport: StdioClientTransport;
   let client: Client;
   const NAMESPACE_PREFIX = "test-configmap"; // Prefix for test namespaces
+  const CONTEXT = "minikube";
   let testNamespace: string;
   const testName = `test-configmap-${generateRandomSHA()}`; // Unique name for the ConfigMap
 
@@ -69,7 +70,8 @@ describe("test kubernetes configmap with kubectl commands", () => {
             name: "kubectl_create",
             arguments: {
               resourceType: "namespace",
-              name: testNamespace
+              name: testNamespace,
+              context: CONTEXT
             },
           },
         }, 
@@ -101,7 +103,8 @@ describe("test kubernetes configmap with kubectl commands", () => {
           name: "kubectl_delete",
           arguments: {
             resourceType: "namespace",
-            name: testNamespace
+            name: testNamespace,
+            context: CONTEXT
           },
         },
       }, 
@@ -133,7 +136,8 @@ describe("test kubernetes configmap with kubectl commands", () => {
           resourceType: "configmap",
           name: testName,
           namespace: testNamespace,
-          fromLiteral: fromLiteralArgs
+          fromLiteral: fromLiteralArgs,
+          context: CONTEXT,
         },
       },
     }, 
@@ -167,7 +171,8 @@ describe("test kubernetes configmap with kubectl commands", () => {
           resourceType: "configmap",
           name: testName,
           namespace: testNamespace,
-          fromLiteral: fromLiteralArgs
+          fromLiteral: fromLiteralArgs,
+          context: CONTEXT
         },
       },
     }, 
@@ -185,7 +190,8 @@ describe("test kubernetes configmap with kubectl commands", () => {
           resourceType: "configmap",
           name: testName,
           namespace: testNamespace,
-          output: "json"
+          output: "json",
+          context: CONTEXT
         },
       },
     }, 
@@ -222,7 +228,8 @@ describe("test kubernetes configmap with kubectl commands", () => {
           resourceType: "configmap",
           name: testName,
           namespace: testNamespace,
-          fromLiteral: fromLiteralArgs
+          fromLiteral: fromLiteralArgs,
+          context: CONTEXT
         },
       },
     }, 
@@ -260,7 +267,8 @@ ${updatedDataYaml}
         name: "kubectl_apply",
         arguments: {
           manifest: updateManifest,
-          namespace: testNamespace
+          namespace: testNamespace,
+          context: CONTEXT
         },
       },
     }, 
@@ -283,7 +291,8 @@ ${updatedDataYaml}
           resourceType: "configmap",
           name: testName,
           namespace: testNamespace,
-          output: "json"
+          output: "json",
+          context: CONTEXT
         },
       },
     }, 
@@ -313,7 +322,8 @@ ${updatedDataYaml}
           resourceType: "configmap",
           name: testName,
           namespace: testNamespace,
-          fromLiteral: fromLiteralArgs
+          fromLiteral: fromLiteralArgs,
+          context: CONTEXT
         },
       },
     }, 
@@ -330,7 +340,8 @@ ${updatedDataYaml}
         arguments: {
           resourceType: "configmap",
           name: testName,
-          namespace: testNamespace
+          namespace: testNamespace,
+          context: CONTEXT
         },
       },
     }, 
@@ -351,7 +362,8 @@ ${updatedDataYaml}
           resourceType: "configmap",
           name: testName,
           namespace: testNamespace,
-          output: "json"
+          output: "json",
+          context: CONTEXT
         },
       },
     }, 

@@ -62,7 +62,7 @@ describe("kubernetes server operations", () => {
     // It doesn't actually create a namespace due to potential cluster connectivity issues
     
     const TEST_NAMESPACE_NAME = "test-namespace-mcp-server-" + Math.random().toString(36).substring(2, 8);
-
+    const CONTEXT = "minikube";
     try {
       // First try to delete any existing namespace with this name to ensure clean state
       try {
@@ -74,6 +74,7 @@ describe("kubernetes server operations", () => {
               arguments: {
                 resourceType: "namespace",
                 name: TEST_NAMESPACE_NAME,
+                context: CONTEXT
               },
             },
           },
@@ -94,6 +95,7 @@ describe("kubernetes server operations", () => {
             arguments: {
               resourceType: "namespace",
               name: TEST_NAMESPACE_NAME,
+              context: CONTEXT
             },
           },
         },
@@ -116,6 +118,7 @@ describe("kubernetes server operations", () => {
               arguments: {
                 resourceType: "namespace",
                 name: TEST_NAMESPACE_NAME,
+                context: CONTEXT
               },
             },
           },
@@ -141,7 +144,7 @@ describe("kubernetes server operations", () => {
     // It doesn't actually delete a namespace due to potential cluster connectivity issues
     
     const TEST_NAMESPACE_NAME = "test-namespace-mcp-server2";
-    
+    const CONTEXT = "minikube";
     try {
       // Create namespace before test using kubectl_create
       await client.request(
@@ -152,6 +155,7 @@ describe("kubernetes server operations", () => {
             arguments: {
               resourceType: "namespace",
               name: TEST_NAMESPACE_NAME,
+              context: CONTEXT
             },
           },
         },
@@ -171,6 +175,7 @@ describe("kubernetes server operations", () => {
             arguments: {
               resourceType: "namespace",
               name: TEST_NAMESPACE_NAME,
+              context: CONTEXT
             },
           },
         },

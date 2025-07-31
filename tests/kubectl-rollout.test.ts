@@ -13,6 +13,8 @@ const KubectlResponseSchema = z.object({
   )
 });
 
+const CONTEXT = "minikube";
+
 type KubectlResponse = z.infer<typeof KubectlResponseSchema>;
 
 async function sleep(ms: number): Promise<void> {
@@ -77,7 +79,8 @@ describe("kubectl_rollout command", () => {
             name: "kubectl_create",
             arguments: {
               resourceType: "namespace",
-              name: testNamespace
+              name: testNamespace,
+              context: CONTEXT
             },
           },
         },
@@ -91,7 +94,7 @@ describe("kubectl_rollout command", () => {
       kind: "Deployment",
       metadata: {
         name: deploymentName,
-        namespace: testNamespace
+        namespace: testNamespace,
       },
       spec: {
         replicas: 1,
@@ -131,7 +134,8 @@ describe("kubectl_rollout command", () => {
             name: "kubectl_apply",
             arguments: {
               manifest: JSON.stringify(deploymentManifest),
-              namespace: testNamespace
+              namespace: testNamespace,
+              context: CONTEXT
             },
           },
         },
@@ -150,7 +154,8 @@ describe("kubectl_rollout command", () => {
               subCommand: "status",
               resourceType: "deployment",
               name: deploymentName,
-              namespace: testNamespace
+              namespace: testNamespace,
+              context: CONTEXT
             },
           },
         },
@@ -177,7 +182,8 @@ describe("kubectl_rollout command", () => {
               arguments: {
                 resourceType: "namespace",
                 name: testNamespace,
-                force: true
+                force: true,
+                context: CONTEXT
               },
             },
           },
@@ -204,7 +210,8 @@ describe("kubectl_rollout command", () => {
             subCommand: "status",
             resourceType: "deployment",
             name: deploymentName,
-            namespace: testNamespace
+            namespace: testNamespace,
+            context: CONTEXT
           },
         },
       },
@@ -225,7 +232,8 @@ describe("kubectl_rollout command", () => {
             subCommand: "restart",
             resourceType: "deployment",
             name: deploymentName,
-            namespace: testNamespace
+            namespace: testNamespace,
+            context: CONTEXT
           },
         },
       },
@@ -246,7 +254,8 @@ describe("kubectl_rollout command", () => {
               subCommand: "status",
               resourceType: "deployment",
               name: deploymentName,
-              namespace: testNamespace
+              namespace: testNamespace,
+              context: CONTEXT
             },
           },
         },
@@ -272,7 +281,8 @@ describe("kubectl_rollout command", () => {
             subCommand: "pause",
             resourceType: "deployment",
             name: deploymentName,
-            namespace: testNamespace
+            namespace: testNamespace,
+            context: CONTEXT
           },
         },
       },
@@ -292,7 +302,8 @@ describe("kubectl_rollout command", () => {
             resourceType: "deployment",
             name: deploymentName,
             namespace: testNamespace,
-            output: "json"
+            output: "json",
+            context: CONTEXT
           },
         },
       },
@@ -312,7 +323,8 @@ describe("kubectl_rollout command", () => {
             subCommand: "resume",
             resourceType: "deployment",
             name: deploymentName,
-            namespace: testNamespace
+            namespace: testNamespace,
+            context: CONTEXT
           },
         },
       },
@@ -332,7 +344,8 @@ describe("kubectl_rollout command", () => {
             resourceType: "deployment",
             name: deploymentName,
             namespace: testNamespace,
-            output: "json"
+            output: "json",
+            context: CONTEXT
           },
         },
       },
@@ -355,7 +368,8 @@ describe("kubectl_rollout command", () => {
             subCommand: "history",
             resourceType: "deployment",
             name: deploymentName,
-            namespace: testNamespace
+            namespace: testNamespace,
+            context: CONTEXT
           },
         },
       },
@@ -381,7 +395,8 @@ describe("kubectl_rollout command", () => {
               subCommand: "status",
               resourceType: "deployment",
               name: nonExistentResource,
-              namespace: testNamespace
+              namespace: testNamespace,
+              context: CONTEXT
             },
           },
         },
@@ -444,7 +459,8 @@ describe("kubectl_rollout command error handling", () => {
               subCommand: "status",
               resourceType: "deployment",
               name: nonExistentResource,
-              namespace: "default"
+              namespace: "default",
+              context: CONTEXT
             },
           },
         },
@@ -472,7 +488,8 @@ describe("kubectl_rollout command error handling", () => {
               subCommand: "status",
               resourceType: "deployment",
               name: "nginx", // Likely doesn't exist but gives predictable error
-              namespace: "default"
+              namespace: "default",
+              context: CONTEXT
             },
           },
         },

@@ -42,7 +42,8 @@ describe("kubectl_patch command", () => {
   let transport: StdioClientTransport;
   let client: Client;
   const configMapName = "patch-test-cm-" + Math.random().toString(36).substring(2, 7);
-
+  const CONTEXT = "minikube";
+  
   beforeEach(async () => {
     transport = new StdioClientTransport({
       command: "bun",
@@ -70,6 +71,7 @@ describe("kubectl_patch command", () => {
           method: "tools/call",
           params: {
             name: "kubectl_create",
+            context: CONTEXT,
             arguments: {
               resourceType: "configmap",
               name: configMapName,
@@ -106,7 +108,8 @@ describe("kubectl_patch command", () => {
               arguments: {
                 resourceType: "configmap",
                 name: configMapName,
-                namespace: "default"
+                namespace: "default",
+                context: CONTEXT
               },
             },
           },
@@ -134,6 +137,7 @@ describe("kubectl_patch command", () => {
             resourceType: "configmap",
             name: configMapName,
             namespace: "default",
+            context: CONTEXT,
             patchType: "strategic",
             patchData: {
               data: {
@@ -160,6 +164,7 @@ describe("kubectl_patch command", () => {
             resourceType: "configmap",
             name: configMapName,
             namespace: "default",
+            context: CONTEXT,
             output: "json"
           },
         },
@@ -184,6 +189,7 @@ describe("kubectl_patch command", () => {
             resourceType: "configmap",
             name: configMapName,
             namespace: "default",
+            context: CONTEXT,
             patchType: "merge",
             patchData: {
               data: {
@@ -210,7 +216,8 @@ describe("kubectl_patch command", () => {
             resourceType: "configmap",
             name: configMapName,
             namespace: "default",
-            output: "json"
+            output: "json",
+            context: CONTEXT
           },
         },
       },
@@ -234,6 +241,7 @@ describe("kubectl_patch command", () => {
             resourceType: "configmap",
             name: configMapName,
             namespace: "default",
+            context: CONTEXT,
             patchType: "strategic",
             patchData: {
               data: {
@@ -260,7 +268,8 @@ describe("kubectl_patch command", () => {
             resourceType: "configmap",
             name: configMapName,
             namespace: "default",
-            output: "json"
+            output: "json",
+            context: CONTEXT
           },
         },
       },
@@ -284,6 +293,7 @@ describe("kubectl_patch command", () => {
               resourceType: "configmap",
               name: nonExistentResource,
               namespace: "default",
+              context: CONTEXT,
               patchData: {
                 data: {
                   key1: "value1"

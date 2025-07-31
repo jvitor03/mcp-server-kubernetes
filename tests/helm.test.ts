@@ -68,6 +68,7 @@ describe("helm operations", () => {
   let client: Client;
   const testReleaseName = "test-nginx";
   const testNamespace = "default-helm";
+  const CONTEXT = "minikube";
 
   beforeEach(async () => {
     try {
@@ -106,6 +107,7 @@ describe("helm operations", () => {
               arguments: {
                 name: testReleaseName,
                 namespace: testNamespace,
+                context: CONTEXT
               },
             },
           },
@@ -137,6 +139,7 @@ describe("helm operations", () => {
             chart: "bitnami/nginx",
             repo: "https://charts.bitnami.com/bitnami",
             namespace: testNamespace,
+            context: CONTEXT,
             values: {
               replicaCount: 1,
               service: {
@@ -183,7 +186,8 @@ describe("helm operations", () => {
           name: "uninstall_helm_chart",
           arguments: {
             name: testReleaseName,
-            namespace: testNamespace
+            namespace: testNamespace,
+            context: CONTEXT
           }
         }
       },
@@ -201,7 +205,8 @@ describe("helm operations", () => {
             name: "kubectl_create",
             arguments: {
               resourceType: "namespace",
-              name: testNamespace
+              name: testNamespace,
+              context: CONTEXT
             },
           },
         },
@@ -226,6 +231,7 @@ describe("helm operations", () => {
             arguments: {
               name: testReleaseName,
               namespace: testNamespace,
+              context: CONTEXT
             },
           },
         },
@@ -246,7 +252,8 @@ describe("helm operations", () => {
           arguments: {
             resourceType: "deployments",
             namespace: testNamespace,
-            output: "json"
+            output: "json",
+            context: CONTEXT
           },
         },
       },
@@ -431,7 +438,8 @@ describe("helm operations", () => {
           arguments: {
             resourceType: "deployments",
             namespace: testNamespace,
-            output: "json"
+            output: "json",
+            context: CONTEXT
           },
         },
       },

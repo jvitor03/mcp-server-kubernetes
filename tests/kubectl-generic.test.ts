@@ -42,6 +42,7 @@ describe("kubectl_generic command", () => {
   let transport: StdioClientTransport;
   let client: Client;
   const testNamespace = "generic-test-" + Math.random().toString(36).substring(2, 7);
+  const CONTEXT = "minikube";
 
   beforeEach(async () => {
     transport = new StdioClientTransport({
@@ -76,7 +77,8 @@ describe("kubectl_generic command", () => {
               arguments: {
                 resourceType: "namespace",
                 name: testNamespace,
-                force: true
+                force: true,
+                context: CONTEXT
               },
             },
           },
@@ -103,7 +105,8 @@ describe("kubectl_generic command", () => {
             arguments: {
               command: "create",
               resourceType: "namespace",
-              name: testNamespace
+              name: testNamespace,
+              context: CONTEXT
             },
           },
         },
@@ -123,7 +126,8 @@ describe("kubectl_generic command", () => {
           name: "kubectl_get",
           arguments: {
             resourceType: "namespace",
-            name: testNamespace
+            name: testNamespace,
+            context: CONTEXT
           },
         },
       },
@@ -171,7 +175,8 @@ describe("kubectl_generic command", () => {
             resourceType: "configmap",
             name: configMapName,
             namespace: "default",
-            outputFormat: "json"
+            outputFormat: "json",
+            context: CONTEXT
           },
         },
       },
@@ -192,7 +197,8 @@ describe("kubectl_generic command", () => {
           arguments: {
             resourceType: "configmap",
             name: configMapName,
-            namespace: "default"
+            namespace: "default",
+            context: CONTEXT
           },
         },
       },
@@ -212,7 +218,8 @@ describe("kubectl_generic command", () => {
             resourceType: "pods",
             namespace: "kube-system",
             outputFormat: "wide",
-            args: ["-l", "k8s-app=kube-dns"]  // Label selector as additional args
+            args: ["-l", "k8s-app=kube-dns"],  // Label selector as additional args
+            context: CONTEXT
           },
         },
       },
@@ -259,7 +266,8 @@ describe("kubectl_generic command", () => {
             resourceType: "configmap",
             name: testConfigMap,
             namespace: "default",
-            outputFormat: "json"
+            outputFormat: "json",
+            context: CONTEXT
           },
         },
       },
@@ -280,7 +288,8 @@ describe("kubectl_generic command", () => {
             resourceType: "configmap",
             name: testConfigMap,
             namespace: "default",
-            args: ["test-annotation=true"]
+            args: ["test-annotation=true"],
+            context: CONTEXT
           },
         },
       },
@@ -298,7 +307,8 @@ describe("kubectl_generic command", () => {
             resourceType: "configmap",
             name: testConfigMap,
             namespace: "default",
-            outputFormat: "json"
+            outputFormat: "json",
+            context: CONTEXT
           },
         },
       },
@@ -318,7 +328,8 @@ describe("kubectl_generic command", () => {
             command: "delete",
             resourceType: "configmap",
             name: testConfigMap,
-            namespace: "default"
+            namespace: "default",
+            context: CONTEXT
           },
         },
       },
@@ -341,7 +352,8 @@ describe("kubectl_generic command", () => {
               command: "get",
               resourceType: "pod",
               name: nonExistentResource,
-              namespace: "default"
+              namespace: "default",
+              context: CONTEXT
             },
           },
         },

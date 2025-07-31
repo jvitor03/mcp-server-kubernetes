@@ -119,7 +119,8 @@ describe("kubernetes server operations", () => {
    * Test case: Verify namespace and node listing functionality
    * Tests both namespace and node listing operations in sequence
    */
-  test("list namespaces and nodes", async () => {
+  test("list namespaces and nodes setting context", async () => {
+    const CONTEXT = "minikube";
     // List namespaces using kubectl_get
     console.log("Listing namespaces...");
     const namespacesResult = await client.request(
@@ -129,7 +130,8 @@ describe("kubernetes server operations", () => {
           name: "kubectl_get",
           arguments: {
             resourceType: "namespaces",
-            output: "json"
+            output: "json",
+            context: CONTEXT
           },
         },
       },
@@ -149,7 +151,8 @@ describe("kubernetes server operations", () => {
           name: "kubectl_get",
           arguments: {
             resourceType: "nodes",
-            output: "json"
+            output: "json",
+            context: ""
           },
         },
       },

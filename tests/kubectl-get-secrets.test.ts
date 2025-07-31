@@ -31,6 +31,8 @@ async function retry<T>(
   throw lastError;
 }
 
+const CONTEXT = "minikube";
+
 describe("kubectl get secrets masking functionality", () => {
   // Helper function to create client with specific environment
   async function createClientWithEnv(maskSecrets?: string): Promise<{transport: StdioClientTransport, client: Client}> {
@@ -45,7 +47,7 @@ describe("kubectl get secrets masking functionality", () => {
       command: "bun",
       args: ["src/index.ts"],
       stderr: "pipe",
-      env: env
+      env: env,
     });
 
     const client = new Client(
@@ -87,6 +89,7 @@ describe("kubectl get secrets masking functionality", () => {
               params: {
                 name: "kubectl_apply",
                 arguments: {
+                  context: CONTEXT,
                   manifest: `
 apiVersion: v1
 kind: Secret
@@ -119,6 +122,7 @@ data:
                   resourceType: "secrets",
                   name: "test-masking-secret",
                   namespace: "default",
+                  context: CONTEXT,
                   output: "json",
                 },
               },
@@ -151,6 +155,7 @@ data:
                 resourceType: "secret",
                 name: "test-masking-secret",
                 namespace: "default",
+                context: CONTEXT,
               },
             },
           },
@@ -173,6 +178,7 @@ data:
               params: {
                 name: "kubectl_apply",
                 arguments: {
+                  context: CONTEXT,
                   manifest: `
 apiVersion: v1
 kind: Secret
@@ -204,6 +210,7 @@ data:
                   resourceType: "secrets",
                   name: "test-unmasked-secret",
                   namespace: "default",
+                  context: CONTEXT,
                   output: "json",
                 },
               },
@@ -230,6 +237,7 @@ data:
                 resourceType: "secret",
                 name: "test-unmasked-secret",
                 namespace: "default",
+                context: CONTEXT,
               },
             },
           },
@@ -252,6 +260,7 @@ data:
               params: {
                 name: "kubectl_apply",
                 arguments: {
+                  context: CONTEXT,
                   manifest: `
 apiVersion: v1
 kind: Secret
@@ -282,6 +291,7 @@ data:
                   resourceType: "secrets",
                   name: "test-default-secret",
                   namespace: "default",
+                  context: CONTEXT,
                   output: "json",
                 },
               },
@@ -307,6 +317,7 @@ data:
                 resourceType: "secret",
                 name: "test-default-secret",
                 namespace: "default",
+                context: CONTEXT,
               },
             },
           },
@@ -330,6 +341,7 @@ data:
               params: {
                 name: "kubectl_apply",
                 arguments: {
+                  context: CONTEXT,
                   manifest: `
 apiVersion: v1
 kind: Secret
@@ -358,6 +370,7 @@ data:
                   resourceType: "secrets",
                   name: "test-json-secret",
                   namespace: "default",
+                  context: CONTEXT,
                   output: "json",
                 },
               },
@@ -381,6 +394,7 @@ data:
                 resourceType: "secret",
                 name: "test-json-secret",
                 namespace: "default",
+                context: CONTEXT,
               },
             },
           },
@@ -402,6 +416,7 @@ data:
               params: {
                 name: "kubectl_apply",
                 arguments: {
+                  context: CONTEXT,
                   manifest: `
 apiVersion: v1
 kind: Secret
@@ -429,6 +444,7 @@ data:
                   resourceType: "secrets",
                   name: "test-yaml-secret",
                   namespace: "default",
+                  context: CONTEXT,
                   output: "yaml",
                 },
               },
@@ -455,6 +471,7 @@ data:
                 resourceType: "secret",
                 name: "test-yaml-secret",
                 namespace: "default",
+                context: CONTEXT,
               },
             },
           },
@@ -482,6 +499,7 @@ data:
                   resourceType: "configmaps",
                   namespace: "default",
                   output: "json",
+                  context: CONTEXT,
                 },
               },
             },
@@ -514,6 +532,7 @@ data:
                   name: "non-existent-test-secret",
                   namespace: "default",
                   output: "json",
+                  context: CONTEXT,
                 },
               },
             },

@@ -35,6 +35,7 @@ async function retry<T>(
 describe("kubectl operations", () => {
   let transport: StdioClientTransport;
   let client: Client;
+  const CONTEXT = "minikube";
 
   beforeEach(async () => {
     try {
@@ -82,6 +83,7 @@ describe("kubectl operations", () => {
             arguments: {
               resource: "pods",
               recursive: true,
+              context: CONTEXT
             },
           },
         },
@@ -108,6 +110,7 @@ describe("kubectl operations", () => {
               resource: "deployments",
               apiVersion: "apps/v1",
               recursive: true,
+              context: CONTEXT
             },
           },
         },
@@ -135,6 +138,7 @@ describe("kubectl operations", () => {
             name: "list_api_resources",
             arguments: {
               output: "wide",
+              context: CONTEXT
             },
           },
         },
@@ -163,6 +167,7 @@ describe("kubectl operations", () => {
               namespaced: true,
               verbs: ["get", "list"],
               output: "name",
+              context: CONTEXT
             },
           },
         },
@@ -193,6 +198,7 @@ describe("kubectl operations", () => {
                 resourceType: "events",
                 namespace: "default",
                 output: "json",
+                context: CONTEXT
               },
             },
           },
@@ -232,6 +238,7 @@ describe("kubectl operations", () => {
                 resourceType: "events",
                 allNamespaces: true,
                 output: "json",
+                context: CONTEXT
               },
             },
           },
@@ -257,6 +264,7 @@ describe("kubectl operations", () => {
                 namespace: "default",
                 fieldSelector: "type=Normal",
                 output: "json",
+                context: CONTEXT
               },
             },
           },
@@ -294,6 +302,7 @@ describe("kubectl operations", () => {
                 resourceType: "events",
                 namespace: "default",
                 output: "json",
+                context: CONTEXT
               },
             },
           },
@@ -333,6 +342,7 @@ describe("kubectl operations", () => {
                 resourceType: "events",
                 allNamespaces: true,
                 output: "json",
+                context: CONTEXT
               },
             },
           },
@@ -358,6 +368,7 @@ describe("kubectl operations", () => {
                 namespace: "default",
                 fieldSelector: "type=Normal",
                 output: "json",
+                context: CONTEXT
               },
             },
           },
@@ -390,6 +401,7 @@ describe("kubectl operations", () => {
                 namespace: "default",
                 sortBy: "type",
                 output: "json",
+                context: CONTEXT
               },
             },
           },

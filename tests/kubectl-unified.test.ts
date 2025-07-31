@@ -42,6 +42,7 @@ describe("kubectl unified commands", () => {
   let transport: StdioClientTransport;
   let client: Client;
   const testNamespace = "kubectl-test-" + Math.random().toString(36).substring(2, 7);
+  const CONTEXT = "minikube";
 
   beforeEach(async () => {
     transport = new StdioClientTransport({
@@ -90,7 +91,8 @@ metadata:
             params: {
               name: "kubectl_apply",
               arguments: {
-                manifest: namespaceManifest
+                manifest: namespaceManifest,
+                context: CONTEXT
               },
             },
           },
@@ -112,7 +114,8 @@ metadata:
               name: "kubectl_delete",
               arguments: {
                 resourceType: "namespace",
-                name: testNamespace
+                name: testNamespace,
+                context: CONTEXT
               },
             },
           },
@@ -143,7 +146,8 @@ metadata:
             params: {
               name: "kubectl_create",
               arguments: {
-                manifest: namespaceManifest
+                manifest: namespaceManifest,
+                context: CONTEXT
               },
             },
           },
@@ -167,7 +171,8 @@ metadata:
             name: "kubectl_get",
             arguments: {
               resourceType: "namespace",
-              name: testNamespaceName
+              name: testNamespaceName,
+              context: CONTEXT
             },
           },
         },
@@ -187,7 +192,8 @@ metadata:
               name: "kubectl_delete",
               arguments: {
                 resourceType: "namespace",
-                name: testNamespaceName
+                name: testNamespaceName,
+                context: CONTEXT
               },
             },
           },
@@ -213,7 +219,8 @@ metadata:
               name: "kubectl_create",
               arguments: {
                 resourceType: "namespace",
-                name: testNamespaceName
+                name: testNamespaceName,
+                context: CONTEXT
               },
             },
           },
@@ -237,7 +244,8 @@ metadata:
             name: "kubectl_get",
             arguments: {
               resourceType: "namespace",
-              name: testNamespaceName
+              name: testNamespaceName,
+              context: CONTEXT
             },
           },
         },
@@ -257,7 +265,8 @@ metadata:
               name: "kubectl_delete",
               arguments: {
                 resourceType: "namespace",
-                name: testNamespaceName
+                name: testNamespaceName,
+                context: CONTEXT
               },
             },
           },
@@ -279,7 +288,8 @@ metadata:
             name: "kubectl_get",
             arguments: {
               resourceType: "namespaces",
-              output: "json"
+              output: "json",
+              context: CONTEXT
             },
           },
         },
@@ -376,7 +386,8 @@ metadata:
             name: "kubectl_get",
             arguments: {
               resourceType: "nodes",
-              output: "json"
+              output: "json",
+              context: CONTEXT
             },
           },
         },
@@ -432,7 +443,8 @@ metadata:
           name: "kubectl_describe",
           arguments: {
             resourceType: "node",
-            name: nodeName
+            name: nodeName,
+            context: CONTEXT
           },
         },
       },
@@ -498,6 +510,7 @@ metadata:
             arguments: {
               resourceType: "nodes",
               output: "json",
+              context: CONTEXT
             },
           },
         },
@@ -554,6 +567,7 @@ metadata:
               resourceType: "namespaces",
               allNamespaces: true,
               output: "json",
+              context: CONTEXT
             },
           },
         },
@@ -605,7 +619,8 @@ spec:
         params: {
           name: "kubectl_apply",
           arguments: {
-            manifest: podManifest
+            manifest: podManifest,
+            context: CONTEXT
           },
         },
       },
@@ -626,7 +641,8 @@ spec:
             arguments: {
               resourceType: "pods",
               namespace: "default",
-              labelSelector: testLabel
+              labelSelector: testLabel,
+              context: CONTEXT
             },
           },
         },
@@ -646,7 +662,8 @@ spec:
             arguments: {
               resourceType: "pod",
               namespace: "default",
-              labelSelector: testLabel
+              labelSelector: testLabel,
+              context: CONTEXT
             },
           },
         },
@@ -667,7 +684,8 @@ spec:
             arguments: {
               resourceType: "pods",
               namespace: "default",
-              labelSelector: testLabel
+              labelSelector: testLabel,
+              context: CONTEXT
             },
           },
         },
@@ -697,7 +715,8 @@ spec:
               arguments: {
                 resourceType: "pod",
                 name: testPodName,
-                namespace: "default"
+                namespace: "default",
+                context: CONTEXT
               },
             },
           },
@@ -724,7 +743,8 @@ spec:
               name: "kubectl_create",
               arguments: {
                 resourceType: "namespace",
-                name: testNamespaceName
+                name: testNamespaceName,
+                context: CONTEXT
               },
             },
           },
@@ -746,7 +766,8 @@ spec:
                 resourceType: "configmap",
                 name: configMapName,
                 namespace: testNamespaceName,
-                fromLiteral: ["key1=value1", "key2=value2"]
+                fromLiteral: ["key1=value1", "key2=value2"],
+                context: CONTEXT
               },
             },
           },
@@ -770,7 +791,8 @@ spec:
               resourceType: "configmap",
               name: configMapName,
               namespace: testNamespaceName,
-              output: "json"
+              output: "json",
+              context: CONTEXT
             },
           },
         },
@@ -792,7 +814,8 @@ spec:
               name: "kubectl_delete",
               arguments: {
                 resourceType: "namespace",
-                name: testNamespaceName
+                name: testNamespaceName,
+                context: CONTEXT
               },
             },
           },
@@ -819,7 +842,8 @@ spec:
               name: "kubectl_create",
               arguments: {
                 resourceType: "namespace",
-                name: testNamespaceName
+                name: testNamespaceName,
+                context: CONTEXT
               },
             },
           },
@@ -859,7 +883,8 @@ spec:
               name: "kubectl_create",
               arguments: {
                 manifest: cronJobManifest,
-                namespace: testNamespaceName
+                namespace: testNamespaceName,
+                context: CONTEXT
               },
             },
           },
@@ -883,7 +908,8 @@ spec:
               resourceType: "cronjob",
               name: cronJobName,
               namespace: testNamespaceName,
-              output: "json"
+              output: "json",
+              context: CONTEXT
             },
           },
         },
@@ -905,7 +931,8 @@ spec:
               name: "kubectl_delete",
               arguments: {
                 resourceType: "namespace",
-                name: testNamespaceName
+                name: testNamespaceName,
+                context: CONTEXT
               },
             },
           },
@@ -933,7 +960,8 @@ spec:
               arguments: {
                 resourceType: "cronjob",
                 name: cronJobName,
-                namespace: testNamespaceName
+                namespace: testNamespaceName,
+                context: CONTEXT
               },
             },
           },
@@ -953,7 +981,8 @@ spec:
               name: "kubectl_create",
               arguments: {
                 resourceType: "namespace",
-                name: testNamespaceName
+                name: testNamespaceName,
+                context: CONTEXT
               },
             },
           },
@@ -978,7 +1007,8 @@ spec:
                 schedule: "*/10 * * * *",
                 image: "busybox",
                 command: ["/bin/sh", "-c", "echo Hello from direct CronJob"],
-                suspend: true
+                suspend: true,
+                context: CONTEXT
               },
             },
           },
@@ -1012,7 +1042,8 @@ spec:
               resourceType: "cronjob",
               name: cronJobName,
               namespace: testNamespaceName,
-              output: "json"
+              output: "json",
+              context: CONTEXT
             },
           },
         },
@@ -1055,7 +1086,8 @@ spec:
               name: "kubectl_delete",
               arguments: {
                 resourceType: "namespace",
-                name: testNamespaceName
+                name: testNamespaceName,
+                context: CONTEXT
               },
             },
           },
